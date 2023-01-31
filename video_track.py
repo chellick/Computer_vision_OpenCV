@@ -6,7 +6,7 @@ cap = cv2.VideoCapture(0)
 
 def nothing(x):
     pass
-kernel = np.ones((5, 5), np.uint8)
+kernel = np.ones((4, 4), np.uint8)
 
 
 cv2.namedWindow('track', cv2.WINDOW_NORMAL)
