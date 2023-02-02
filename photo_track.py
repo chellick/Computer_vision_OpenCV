@@ -12,16 +12,18 @@ def onlyThisOne(image, lower, upper, kernel):
     return closing
 
 
-kernel = np.ones((5, 5), np.uint8)
+kernel = np.ones((6, 6), np.uint8)
 
 
 LOWER = np.array([0, 0, 200])
 UPPER = np.array([160, 160, 255])
 
-image = cv2.imread("images/WIN_20221219_16_35_22_Pro.jpg")
+image = cv2.imread("images/WIN_20221219_16_38_00_Pro.jpg")
 image = cv2.resize(image, None, fx=0.5, fy=0.5)
 
 new_image = onlyThisOne(image, LOWER, UPPER, kernel)
+
+# print(type(new_image))
 
 cv2.imshow("Переход", new_image)
 cv2.waitKey(0)
