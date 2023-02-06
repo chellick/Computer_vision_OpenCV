@@ -4,7 +4,7 @@ from tensorflow.keras import datasets, layers, models, optimizers
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
-
+import keras
 
 
 
@@ -80,9 +80,19 @@ UPPER = np.array([160, 160, 255])
 
 new_image = onlyThisOne(image, LOWER, UPPER, kernel)
 
-
-
 tensor_image = tf.constant(new_image)
+#--------------------------------------------------------------------------------------------
 
 
-print(tensor_image)
+model = keras.Sequential([
+    keras.layers.Flatten(input_shape=(1920, 1080)),
+    keras.layers.Dense(128, activation='relu'),
+    keras.layers.Dense(10, activation='softmax')
+    ])
+
+model.compile(optimizer='adam', loss='sparse_categotical_crossentropy', metrics=['accuracy'])
+
+model.fit(tensor_image, train_labels, epochs=5)
+
+
+# print(tensor_image)
