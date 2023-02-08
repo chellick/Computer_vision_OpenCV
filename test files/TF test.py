@@ -39,7 +39,7 @@ a2 = tf.cast(c, dtype=tf.float32)
 print(np.array(a2))
 '''
 #--------------------------------------------------------------------------------------------
-
+'''
 # tf.Variable - изменяемый массив
 # tf.assign - заменить
 # tf.assign_add - добавиь
@@ -51,10 +51,9 @@ print(np.array(a2))
 #
 # v2 = tf.Variable([3, 1, 2, 5], dtype=tf.float32)
 # print(v2)
+'''
 #--------------------------------------------------------------------------------------------
-
-
-
+'''
 image = cv2.imread("C:\python\GitHub\CV\images\WIN_20221219_16_35_22_Pro.jpg")
 
 
@@ -81,18 +80,46 @@ UPPER = np.array([160, 160, 255])
 new_image = onlyThisOne(image, LOWER, UPPER, kernel)
 
 tensor_image = tf.constant(new_image)
+
+plt.imshow(tensor_image, cmap=plt.cm.binary)
+plt.show()
+print(tensor_image)
 #--------------------------------------------------------------------------------------------
+# w = tf.Variable(tf.random.normal((3, 2)))
+# b = tf.Variable(tf.zeros(2, dtype=tf.float32))
+# x = tf.Variable([[-2.0, 1.0, 3.0]])
+#
+# with tf.GradientTape() as tape:
+#     y = x @ w + b
+#     # print(y, 'y')
+#     loss = tf.reduce_mean(y ** 2)
+#
+#
+# df = tape.gradient(loss, [w, b])
+# print(df[0], df[1], sep='\n')
+
+# Автоматическое дифференцирование функции
+'''
+
+from pixellib.instance import instance_segmentation
+
+def obj_detect():
+    s_image = instance_segmentation()
+    s_image.load_model("\python\GitHub\CV\mask_rcnn_balloon.h5")    # TODO wrong file name correct
+
+    target_class = s_image.select_target_classes(person=True)
+
+    s_image.segmentImage(
+        image_path="images\WIN_20221219_16_35_22_Pro.jpg",
+        show_bboxes=True,
+        segment_target_classes=target_class,
+        output_image_name='output.jpg'
+    )
+
+def main():
+    obj_detect()
+
+if __name__ == '__main__':
+    main()
 
 
-model = keras.Sequential([
-    keras.layers.Flatten(input_shape=(1920, 1080)),
-    keras.layers.Dense(128, activation='relu'),
-    keras.layers.Dense(10, activation='softmax')
-    ])
-
-model.compile(optimizer='adam', loss='sparse_categotical_crossentropy', metrics=['accuracy'])
-
-model.fit(tensor_image, train_labels, epochs=5)
-
-
-# print(tensor_image)
