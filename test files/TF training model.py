@@ -23,7 +23,8 @@ model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=
 model.fit(train_images, train_labels, epochs=0)
 test_loss, test_acc = model.evaluate(test_images, test_labels)
 
-print(len(train_labels))
-print(len(train_images))
+print(type(train_labels[0]))
+print(train_labels.shape)
+# print(len(train_images))
 
 # print('Tetsed Acc:', test_acc)

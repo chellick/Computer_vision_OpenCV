@@ -41,7 +41,7 @@ import os
 path = 'C:\\python\\GitHub\\CV\\images'
 # print(os.listdir(path))
 
-data = np.array([0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0])
+data = np.array([0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0], dtype=np.uint8)
 img_data = []
 temp_data = []
 train_tensor = []
@@ -67,22 +67,8 @@ for g, i in enumerate(os.listdir(path)):
     UPPER = np.array([160, 160, 255])
 
     new_image = onlyThisOne(image, LOWER, UPPER, kernel)
-
-    # tensor_image = tf.constant(new_image)
-
-
+    new_image = new_image.reshape(1, 1920 * 1080)
     train_tensor.append(new_image)
-    # temp_data.append(i)
-    # temp_data.append(tensor_image)
-    # temp_data.append(data[g])
-    #
-    # img_data.append(temp_data)
-    # temp_data = []
-
-
-
-
-
 
 
 path = 'C:\\python\\GitHub\\CV\\cut'
@@ -94,43 +80,24 @@ data_c = np.array([0, 1, 0, 1, 0])
 
 for g, i in enumerate(os.listdir(path)):
     image = cv2.imread('cut' + '/' + i)
-
-
-    def onlyThisOne(image, lower, upper, kernel):
-        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-
-        mask = cv2.inRange(hsv, lower, upper)
-
-        opening = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
-        closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel)
-
-        return closing
-
-
     kernel = np.ones((6, 6), np.uint8)
 
     LOWER = np.array([0, 0, 200])
     UPPER = np.array([160, 160, 255])
 
     new_image = onlyThisOne(image, LOWER, UPPER, kernel)
-
-    # tensor_image = tf.constant(new_image)
-
+    new_image = new_image.reshape(1, 1920 * 1080)
     test_tensor.append(new_image)
 
-    # temp_data_c.append(i)
-    # temp_data_c.append(tensor_image)
-    #
-    # img_data_c.append(temp_data_c)
-    # temp_data_c = []
-
-
-print(len(train_tensor))
-print(len(data))
 
 
 
-model = keras.Sequential([keras.layers.Flatten(input_shape=(1920, 1080)),
+# print(train_tensor[0].shape)
+# print(len(data))
+train_tensor = np.asarray(train_tensor)
+test_tensor = np.asarray(test_tensor)
+
+model = keras.Sequential([keras.layers.Flatten(input_shape=(1, 1080 * 1920)),
                           keras.layers.Dense(128, activation='relu'),
                           keras.layers.Dense(2)])
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
