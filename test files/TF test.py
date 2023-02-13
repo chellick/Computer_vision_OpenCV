@@ -105,7 +105,7 @@ from pixellib.instance import instance_segmentation
 
 def obj_detect():
     s_image = instance_segmentation()
-    s_image.load_model("\python\GitHub\CV\mask_rcnn_balloon.h5")    # TODO wrong file name correct
+    s_image.load_model('\python\GitHub\CV\mask_rcnn_balloon.h5')    # TODO wrong file name correct
 
     target_class = s_image.select_target_classes(person=True)
 
