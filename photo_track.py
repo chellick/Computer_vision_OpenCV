@@ -100,8 +100,11 @@ test_tensor = np.asarray(test_tensor)
 model = keras.Sequential([keras.layers.Flatten(input_shape=(1, 1080 * 1920)),
                           keras.layers.Dense(128, activation='relu'),
                           keras.layers.Dense(2)])
-model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
-model.fit(train_tensor, data, epochs=5)
+
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+model.fit(train_tensor, data, epochs=15, validation_data=(test_tensor, data_c))
 test_loss, test_acc = model.evaluate(test_tensor, data_c)
 
 
