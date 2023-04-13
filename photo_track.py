@@ -104,10 +104,7 @@ model = keras.Sequential([keras.layers.Flatten(input_shape=(1, 1080 * 1920)),
 model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
-model.fit(train_tensor, data, epochs=15, validation_data=(test_tensor, data_c))
+model.fit(train_tensor, data, epochs=19, validation_data=(test_tensor, data_c))
 test_loss, test_acc = model.evaluate(test_tensor, data_c)
 
-
-
-
-
+print(test_acc)
